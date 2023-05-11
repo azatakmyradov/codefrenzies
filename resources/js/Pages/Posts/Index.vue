@@ -19,7 +19,7 @@ defineProps({
     <GuestLayout>
         <main class="posts">
             <div class="bg-gray-800 text-white rounded shadow post-item" v-for="(post, key) in posts">
-                <img src="https://placehold.co/400x250" alt="Post Image" class="w-full h-auto">
+                <img :src="post.thumbnail" :alt="post.title" class="w-full h-auto">
                 <div class="p-4 post-content">
                     <h2 class="text-xl sm:text-2xl font-semibold mb-2">{{ post.title }}</h2>
                 </div>
@@ -32,13 +32,8 @@ defineProps({
 </template>
 
 <style scoped>
-@keyframes fadeIn {
-    0% {opacity: 0;}
-    100% {opacity: 1;}
-}
-
 .post-item {
-    animation: fadeIn 1s ease-in-out;
+    animation: fadeIn .5s ease-in-out;
     transition: transform 0.2s ease-in-out;
     display: flex;
     flex-direction: column;
