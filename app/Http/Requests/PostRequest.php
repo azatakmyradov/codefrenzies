@@ -26,10 +26,10 @@ class PostRequest extends FormRequest
         $post = $this->route('post') ? $this->route('post') : new Post();
 
         return [
-            'title' => ['required'],
-            'slug' => ['required', Rule::unique('posts', 'slug')->ignore($this->route('post') ?: null)],
-            'seo_description' => ['required'],
-            'thumbnail' => ['required'],
+            'title' => ['required', 'max:100'],
+            'slug' => ['required', 'max:165', Rule::unique('posts', 'slug')->ignore($this->route('post') ?: null)],
+            'seo_description' => ['required', 'max:165'],
+            'thumbnail' => ['required', 'max:255'],
             'category_id' => ['required', 'exists:categories,id'],
             'body' => ['required'],
             'published_at' => $post?->published_at !== null ? [] : ['nullable', 'after:' . now()]

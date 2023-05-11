@@ -26,8 +26,8 @@ class UserRequest extends FormRequest
         $user = $this->route('user') ? $this->route('user') : new User();
 
         return [
-            'name' => ['required'],
-            'email' => ['required', 'email', Rule::unique('users', 'email')->ignore($user)],
+            'name' => ['required', 'max:25'],
+            'email' => ['required', 'max:30', 'email', Rule::unique('users', 'email')->ignore($user)],
             'password' => $user->exists ? ['nullable'] : ['required']
         ];
     }

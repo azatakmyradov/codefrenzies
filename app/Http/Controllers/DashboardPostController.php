@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Requests\PostRequest;
 use App\Models\Category;
 use App\Models\Post;
+use Illuminate\Support\Facades\Cache;
 use Inertia\Inertia;
 
 class DashboardPostController extends Controller
@@ -42,6 +43,8 @@ class DashboardPostController extends Controller
 
         auth()->user()->posts()->create($attributes);
 
+        Cache::forget('posts.published');
+
         return redirect('/dashboard/posts')->with('message', 'Post was created!');
     }
 
@@ -66,6 +69,9 @@ class DashboardPostController extends Controller
         }
 
         $post->update($attributes);
+
+        Cache::forget('posts.published');
+        Cache::forget('posts.' . $post->slug);
 
         return back()->with('message', 'Post updated!');
     }
