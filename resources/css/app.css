@@ -1,0 +1,59 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.base-input {
+    @apply bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500;
+}
+
+.primary-button {
+    @apply bg-blue-400 text-white w-full py-3 flex justify-center;
+}
+
+body {
+    @apply bg-primary text-white;
+}
+
+.padding {
+    @apply p-10;
+}
+
+.header {
+    @apply flex justify-between items-center;
+    @apply h-20 border-b border-slate-700 padding;
+}
+
+.menu-item {
+    @apply text-xl font-bold text-slate-400;
+    @apply py-4 block h-full;
+    @apply transition duration-300;
+}
+
+.menu-item:hover {
+    @apply hover:text-white;
+}
+
+.active {
+    @apply text-white border-b;
+}
+
+.button-secondary {
+    @apply text-sm md:text-lg hover:text-white text-slate-500;
+    @apply py-4 px-4 rounded-xl;
+    @apply border border-slate-500 hover:border-white;
+    @apply transition duration-200;
+}
+
+.posts {
+    @apply w-full px-10 lg:w-[868px] mx-auto mt-12 mb-12;
+    @apply grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4;
+}
+
+.post-item {
+    border-radius: 20px;
+    @apply w-full;
+}
+
+.post-item img {
+    border-radius: 10px;
+}
