@@ -18,23 +18,42 @@ defineProps({
 
     <GuestLayout>
         <main class="posts">
-            <Link :href="`/posts/${post.slug}`" v-for="(post, key) in posts">
-                <div class="post-item bg-slate-700">
-                    <img class="object-cover w-full max-h-[200px]" :src="post.thumbnail" :alt="post.title" loading="lazy">
-                    <h1 class="text-white font-bold p-2 hover:underline">{{ post.title }}</h1>
+            <div class="bg-gray-800 text-white rounded shadow post-item" v-for="(post, key) in posts">
+                <img src="https://placehold.co/400x250" alt="Post Image" class="w-full h-auto">
+                <div class="p-4 post-content">
+                    <h2 class="text-xl sm:text-2xl font-semibold mb-2">{{ post.title }}</h2>
                 </div>
-            </Link>
+                <div class="p-4">
+                    <Link :href="`/posts/${post.slug}`" class="text-blue-500 mt-4 inline-block">Read More</Link>
+                </div>
+            </div>
         </main>
     </GuestLayout>
 </template>
 
-<style>
-.bg-dots-darker {
-    background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(0,0,0,0.07)'/%3E%3C/svg%3E");
+<style scoped>
+@keyframes fadeIn {
+    0% {opacity: 0;}
+    100% {opacity: 1;}
 }
-@media (prefers-color-scheme: dark) {
-    .dark\:bg-dots-lighter {
-        background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.22676 0C1.91374 0 2.45351 0.539773 2.45351 1.22676C2.45351 1.91374 1.91374 2.45351 1.22676 2.45351C0.539773 2.45351 0 1.91374 0 1.22676C0 0.539773 0.539773 0 1.22676 0Z' fill='rgba(255,255,255,0.07)'/%3E%3C/svg%3E");
-    }
+
+.post-item {
+    animation: fadeIn 1s ease-in-out;
+    transition: transform 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+}
+
+.post-item:hover {
+    transform: scale(1.02);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.post-content {
+    flex: 1;
+}
+
+h2 {
+    line-height: 1.2;
 }
 </style>
