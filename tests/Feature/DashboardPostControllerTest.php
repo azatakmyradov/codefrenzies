@@ -117,7 +117,7 @@ class DashboardPostControllerTest extends TestCase
             'slug' => fake()->slug,
             'body' => fake()->paragraph,
             'category_id' => $category->id,
-            'seo_description' => fake()->paragraph,
+            'seo_description' => fake()->sentence,
             'thumbnail' => fake()->imageUrl,
         ];
     }
