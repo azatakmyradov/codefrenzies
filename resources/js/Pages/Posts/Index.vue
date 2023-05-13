@@ -19,7 +19,7 @@ defineProps({
     <GuestLayout>
         <main class="posts">
             <div class="bg-gray-800 text-white rounded shadow post-item" v-for="(post, key) in posts">
-                <img class="bg-cover h-[200px]"
+                <img class="bg-cover h-[200px] border border-black"
                     :style="`background-image: url('${post.thumbnail}')`">
                 <div class="px-4 pt-4 post-content">
                     <h2 class="text-xl font-semibold mb-2">{{ post.title }}</h2>
