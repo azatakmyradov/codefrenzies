@@ -19,11 +19,12 @@ defineProps({
     <GuestLayout>
         <main class="posts">
             <div class="bg-gray-800 text-white rounded shadow post-item" v-for="(post, key) in posts">
-                <img :src="post.thumbnail" :alt="post.title" class="w-full h-auto">
-                <div class="p-4 post-content">
-                    <h2 class="text-xl sm:text-2xl font-semibold mb-2">{{ post.title }}</h2>
+                <img class="bg-cover h-[200px]"
+                    :style="`background-image: url('${post.thumbnail}')`">
+                <div class="px-4 pt-4 post-content">
+                    <h2 class="text-xl font-semibold mb-2">{{ post.title }}</h2>
                 </div>
-                <div class="p-4">
+                <div class="px-4 pb-4">
                     <Link :href="`/posts/${post.slug}`" class="text-blue-500 mt-4 inline-block">Read More</Link>
                 </div>
             </div>
