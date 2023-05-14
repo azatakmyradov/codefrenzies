@@ -7,64 +7,78 @@ use App\Models\Post;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Facades\Auth;
+use Inertia\Testing\AssertableInertia as Assert;
 use Tests\TestCase;
 
 class DashboardCategoryControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /** @test */
-    public function test_if_user_can_access_categories() {
-        $response = $this->get('/dashboard/categories');
-        $response->assertRedirect('/login');
-
+    /**
+     * Test if user can access dashboard
+     * @test
+     */
+    public function test_user_can_access_dashboard_categories() {
         $user = User::factory()->create();
-        Auth::login($user);
 
+        // guests cannot access dashboard
+        $this->get('/dashboard/categories')
+            ->assertRedirect('/login');
+
+        Auth::login($user);
         $this->assertAuthenticated();
 
-        $response = $this->get('/dashboard/categories');
-        $response->assertStatus(200);
+        $this->get('/dashboard/categories')
+            ->assertStatus(200)
+            ->assertInertia(fn (Assert $page) => $page
+                ->component('Dashboard/Categories/Index')
+                ->has('categories'));
     }
 
-    /** @test */
-    public function test_if_user_can_add_category() {
-        $attributes = [
+    /**
+     * Test if users can add a category
+     * @test
+     */
+    public function test_user_can_add_category() {
+        // guests cannot add a category
+        $this->post('/dashboard/categories', [
             'name' => fake()->word
-        ];
-
-        $response = $this->post('/dashboard/categories', $attributes);
-        $response->assertRedirect('/login');
+        ])
+            ->assertRedirect('/login');
 
         $user = User::factory()->create();
         Auth::login($user);
-
         $this->assertAuthenticated();
 
-        $response = $this->post('/dashboard/categories', $attributes);
-        $response->assertSessionHas('message', 'Category was created!');
+        $this->post('/dashboard/categories', [
+            'name' => fake()->word
+        ])
+            ->assertSessionHas('message', 'Category was created!');
     }
 
-    /** @test */
-    public function test_if_user_can_delete_category() {
-        $user = User::factory()->create();
-        $category = Category::factory()->create();
-        $post = Post::factory()->create([
-            'user_id' => $user->id,
-            'category_id' => $category->id
-        ]);
+    /**
+     * Tests if user can delete category
+     * @test
+     */
+    public function test_user_can_delete_category() {
+        $post = Post::factory()->create();
 
-        $response = $this->delete("/dashboard/categories/{$category->id}");
-        $response->assertRedirect('/login');
+        // guests cannot delete category
+        $this->delete("/dashboard/categories/{$post->category->id}")
+            ->assertRedirect('/login');
 
-        Auth::login($user);
+        Auth::login($post->author);
 
-        $response = $this->delete("/dashboard/categories/{$category->id}");
-        $response->assertSessionHas('error', 'This category cannot be deleted');
+        // category cannot be deleted if it has posts
+        $this->delete("/dashboard/categories/{$post->category->id}")
+            ->assertSessionHas('error', 'This category cannot be deleted');
 
+        // delete the post associated with category
+        $category = $post->category;
         $post->delete();
 
-        $response = $this->delete("/dashboard/categories/{$category->id}");
-        $response->assertSessionHas('message', 'Category was deleted!');
+        // user should be able to delete category that is not associated with posts
+        $this->delete("/dashboard/categories/{$category->id}")
+            ->assertSessionHas('message', 'Category was deleted!');
     }
 }
