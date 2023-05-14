@@ -80,7 +80,7 @@ const updatePost = () => {
                                         :key="category.id"
                                         :value="category.id"
                                         v-for="category in categories"
-                                        :selected="form.category_id === form.category_id">
+                                        :selected="category.id === post.category_id">
                                             {{ category.name }}
                                     </option>
                                 </select>
