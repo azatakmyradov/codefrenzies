@@ -34,13 +34,13 @@ const showingNavigationDropdown = ref(false);
                                 <NavLink :href="route('dashboard')" :active="route().current('dashboard')">
                                     Dashboard
                                 </NavLink>
-                                <NavLink href="/dashboard/posts" :active="$page.url === '/dashboard/posts'">
+                                <NavLink :href="route('dashboard.posts.index')" :active="$page.url === route().current('dashboard.posts.index')">
                                     Posts
                                 </NavLink>
-                                <NavLink href="/dashboard/categories" :active="$page.url === '/dashboard/categories'">
+                                <NavLink :href="route('dashboard.categories.index')" :active="$page.url === route().current('dashboard.categories.index')">
                                     Categories
                                 </NavLink>
-                                <NavLink href="/dashboard/users" :active="$page.url === '/dashboard/users'">
+                                <NavLink :href="route('dashboard.users.index')" :active="$page.url === route().current('dashboard.users.index')">
                                     Users
                                 </NavLink>
                             </div>

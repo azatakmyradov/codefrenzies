@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const deleteUser = id => {
-    router.delete(`/dashboard/users/${id}`);
+    router.delete(route('dashboard.users.destroy', { id }));
 }
 </script>
 
@@ -26,7 +26,7 @@ const deleteUser = id => {
                 <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
 
                     <div class="relative overflow-x-auto shadow-md sm:rounded-lg p-6">
-                        <Link href="/dashboard/users/create" class="primary-button">Add User</Link>
+                        <Link :href="route('dashboard.users.create')" class="primary-button">Add User</Link>
                         <table id="posts" class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                             <tr>
@@ -50,7 +50,7 @@ const deleteUser = id => {
                                     {{ user.email }}
                                 </td>
                                 <td class="px-6 py-4 space-x-3">
-                                    <Link :href="`/dashboard/users/${user.id}/edit`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                                    <Link :href="route('dashboard.users.edit', { id: user.id })" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
                                     <a href="#" @click.prevent="deleteUser(user.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
                                 </td>
                             </tr>

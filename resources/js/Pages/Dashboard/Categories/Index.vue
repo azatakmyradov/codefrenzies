@@ -16,7 +16,7 @@ let form = useForm({
 
 const isLoading = ref(false);
 const addCategory = () => {
-    form.post('/dashboard/categories', {
+    form.post(route('dashboard.categories.store'), {
         preserveScroll: true,
         onStart: () => isLoading.value = true,
         onFinish: () => {
@@ -26,7 +26,7 @@ const addCategory = () => {
 }
 
 const deleteCategory = id => {
-    router.delete(`/dashboard/categories/${id}`);
+    router.delete(route('dashboard.categories.destroy', { id }));
 }
 </script>
 

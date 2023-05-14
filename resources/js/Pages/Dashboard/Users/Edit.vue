@@ -20,7 +20,7 @@ const form = useForm({
 const isLoading = ref(false);
 
 const update = () => {
-    form.put(`/dashboard/users/${props.user.id}`, {
+    form.put(route('dashboard.users.update'), {
         preserveScroll: true,
         onStart: () => isLoading.value = true,
         onFinish: () => isLoading.value = false

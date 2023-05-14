@@ -9,7 +9,7 @@ const props = defineProps({
 });
 
 const deletePost = id => {
-    router.delete(`/dashboard/posts/${id}`);
+    router.delete(route('dashboard.posts.destroy', { id }));
 }
 </script>
 
@@ -69,7 +69,7 @@ const deletePost = id => {
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 space-x-3">
-                                        <Link :href="`/dashboard/posts/${post.id}/edit`" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
+                                        <Link :href="route('dashboard.posts.edit', { id: post.id })" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</Link>
                                         <a href="#" @click.prevent="deletePost(post.id)" class="font-medium text-red-600 dark:text-red-500 hover:underline">Delete</a>
                                     </td>
                                 </tr>

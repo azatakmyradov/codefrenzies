@@ -14,6 +14,14 @@ use Inertia\Response;
 class ProfileController extends Controller
 {
     /**
+     * Initialize auth middleware in the constructor
+     */
+    public function __construct()
+    {
+        $this->middleware(['auth']);
+    }
+
+    /**
      * Display the user's profile form.
      */
     public function edit(Request $request): Response

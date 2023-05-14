@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\DashboardCategoryController;
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DashboardPostController;
 use App\Http\Controllers\DashboardUserController;
 use App\Http\Controllers\PostController;
@@ -21,25 +22,28 @@ use Inertia\Inertia;
 */
 
 Route::get('/', [PostController::class, 'index']);
-Route::get('/posts/{post:slug}', [PostController::class, 'show'])->name('posts.show');
+Route::get('/posts/{post:slug}', [PostController::class, 'show'])
+    ->name('posts.show');
 
-Route::get('/dashboard', function () {
-    return Inertia::render('Dashboard');
-})->middleware(['auth'])->name('dashboard');
+Route::get('/dashboard', DashboardController::class)
+    ->name('dashboard');
 
-Route::resource('/dashboard/posts', DashboardPostController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
+Route::name('dashboard.')->group(function () {
+    Route::resource('/dashboard/posts', DashboardPostController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 
-Route::resource('/dashboard/categories', DashboardCategoryController::class)
-    ->only(['index', 'store', 'destroy']);
+    Route::resource('/dashboard/categories', DashboardCategoryController::class)
+        ->only(['index', 'store', 'destroy']);
 
-Route::resource('/dashboard/users', DashboardUserController::class)
-    ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
-
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('/dashboard/users', DashboardUserController::class)
+        ->only(['index', 'create', 'store', 'edit', 'update', 'destroy']);
 });
+
+Route::get('/profile', [ProfileController::class, 'edit'])
+    ->name('profile.edit');
+Route::patch('/profile', [ProfileController::class, 'update'])
+    ->name('profile.update');
+Route::delete('/profile', [ProfileController::class, 'destroy'])
+    ->name('profile.destroy');
 
 require __DIR__.'/auth.php';

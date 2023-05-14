@@ -27,7 +27,7 @@ const form = useForm({
 const isLoading = ref(false);
 
 const createPost = () => {
-    form.post('/dashboard/posts', {
+    form.post(route('dashboard.posts.store'), {
         preserveScroll: true,
         onStart: () => isLoading.value = true,
         onFinish: () => isLoading.value = false
