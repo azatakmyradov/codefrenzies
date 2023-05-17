@@ -10,7 +10,7 @@ import emoji from "markdown-it-emoji";
 import footnote from "markdown-it-footnote";
 import container from "markdown-it-container";
 import hljs from 'highlight.js';
-import 'highlight.js/styles/agate.css';
+import 'highlight.js/styles/atom-one-dark.css';
 
 function renderHeadingOpen(tokens, idx) {
     const token = tokens[idx];
