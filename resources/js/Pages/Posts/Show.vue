@@ -38,7 +38,7 @@ const publishedAt = computed(() => {
 
     <GuestLayout>
         <div class="bg-white">
-            <div class="mx-auto w-full lg:max-w-2xl post-content py-10">
+            <div class="mx-auto w-full lg:max-w-2xl post-content py-10 px-6">
                 <h1 class="mt-2 text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">{{ post.title }}</h1>
                 <p class="text-base leading-7 text-gray-600">
                     Published by <span class="font-bold">{{ post.author.name }}</span> - {{ publishedAt }}
