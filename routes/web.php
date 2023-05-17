@@ -21,7 +21,10 @@ use Inertia\Inertia;
 |
 */
 
-Route::get('/', [PostController::class, 'index']);
+Route::feeds();
+
+Route::get('/', [PostController::class, 'index'])
+    ->name('posts.index');
 Route::get('/posts/{post:slug}', [PostController::class, 'show'])
     ->name('posts.show');
 

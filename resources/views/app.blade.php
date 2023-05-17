@@ -23,6 +23,8 @@
         @routes
         @vite(['resources/js/app.js', "resources/js/Pages/{$page['component']}.vue"])
         @inertiaHead
+
+        @include('feed::links')
     </head>
     <body class="font-sans antialiased">
         @inertia
