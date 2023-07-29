@@ -23,7 +23,7 @@ class PostController extends Controller
     public function show($slug)
     {
         $post = Cache::rememberForever("posts.{$slug}", function () use ($slug) {
-           return Post::where('slug', $slug)->first();
+           return Post::where('slug', $slug)->with('category')->first();
         });
 
         return Inertia::render('Posts/Show', [
