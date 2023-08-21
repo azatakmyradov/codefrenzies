@@ -1,11 +1,43 @@
 <script setup>
-import { Head, Link } from '@inertiajs/vue3';
+import { Head, Link, router, usePage } from '@inertiajs/vue3';
 import GuestLayout from '@/Layouts/GuestLayout.vue';
+import { ref } from 'vue';
+import { watch } from 'vue';
 
-defineProps({
+const props = defineProps({
     posts: {
-        type: Array,
+        type: Object,
         required: true
+    }
+});
+
+const posts = ref(props.posts.data);
+
+watch(() => props.posts, () => {
+    posts.value = [...posts.value, ...props.posts.data];
+});
+
+const initialUrl = usePage().url;
+let currentPage = ref(0);
+
+const loadMoreItems = () => {
+    currentPage.value++;
+    router.get(props.posts.next_page_url, {}, {
+        preserveState: true,
+        preserveScroll: true,
+        onSuccess: () => {
+            window.history.replaceState({}, '', initialUrl);
+        }
+    });
+}
+
+document.addEventListener('scroll', () => {
+    let documentHeight = document.body.scrollHeight;
+    let currentScroll = window.scrollY + window.innerHeight;
+
+    let modifier = 200;
+    if(currentScroll + modifier > documentHeight && props.posts.last_page !== currentPage.value) {
+        loadMoreItems();
     }
 });
 </script>
@@ -30,6 +62,13 @@ defineProps({
                 </Link>
             </div>
         </main>
+
+        <div class="flex justify-center pb-5">
+            <Link
+                href="#"
+                @click="loadMoreItems"
+                v-if="props.posts.current_page !== props.posts.last_page">Load more</Link>
+        </div>
     </GuestLayout>
 </template>
 
